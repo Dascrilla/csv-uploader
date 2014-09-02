@@ -9,6 +9,7 @@ Template.main.helpers({
 }); 
 
 Template.upload.events({
+  
   "change #files": function (e) {
     var files = e.target.files || e.dataTransfer.files;
     for (var i = 0, file; file = files[i]; i++) {
@@ -26,5 +27,11 @@ Template.upload.events({
         reader.readAsText(file);
       }
     }
+  }, 
+
+  'click .clear': function (e) {
+      e.preventDefault(); 
+      Meteor.call('prospectsRemove'); 
   }
+
 })
