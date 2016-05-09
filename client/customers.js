@@ -6,8 +6,7 @@ Template.main.helpers({
 	customer: function(){
 		return Customers.find();
 		} 
-}); 
-	
+}); 	
 	// Uploads Customer List
 Template.upload.events({
 	"change #files": function (e) {
@@ -35,7 +34,6 @@ Template.upload.events({
 	}
 
 })
-
 // Using a template's rendered callback
 Meteor.startup(function(){
 		Mapbox.load();
@@ -43,7 +41,8 @@ Meteor.startup(function(){
 
 Template.main.rendered = function () {
 
-var thisRegion = '94611'
+//Sets the default zip region
+var defaultRegion = '94102'
 
 		this.autorun(function () {
 				if (Mapbox.loaded()) {
@@ -52,7 +51,7 @@ var thisRegion = '94611'
 						map = L.mapbox.map('map', 'alexnetsch.j786e624').addControl(L.mapbox.geocoderControl('mapbox.places', {
         autocomplete: true
     }));;
-						geocoder.query(thisRegion, showMap);
+						geocoder.query(defaultRegion, showMap);
 
 function showMap(err, data) {
 	// The geocoder can return an area, like a city, or a
@@ -64,9 +63,6 @@ function showMap(err, data) {
 				map.setView([data.latlng[0], data.latlng[1]], 14);
 			}
 		}
-
-
-
 		// Initializes Markers binds popup
 			var addMarker;
 			addMarker = function(geocoder, map, placeName, popupContent) {
@@ -77,8 +73,6 @@ function showMap(err, data) {
 				return marker.bindPopup(popupContent).addTo(map);
 			});
 		};
-
-
 // Fetches DB as Array, Geocodes addresses and adds markers for each DB row in a for loop
 var customerCursor = Customers.find();
 var customers = customerCursor.fetch();
@@ -92,15 +86,14 @@ var customers = customerCursor.fetch();
   									thisAddress + '<br \/>' +
 										'EE Count: ' + customers[i].EE + '<br \/>' +
 										'Industry: ' + customers[i].Industry + '<br \/>' +
-										'Industry V2: ' + customers[i].IndustryV2;
+										'Industry V2: ' + customers[i].IndustryV2 + '<br \/>' +
+										'SFDC Link: https://na23.salesforce.com/' + customers.[i].SFDC 
 
 	addMarker(geocoder, map, thisAddress, popupContent);
 
 									}
-
 }}
 )};
-
 
 	/*customerAddressList = function (){
 		Customers.find().forEach(function(obj){
