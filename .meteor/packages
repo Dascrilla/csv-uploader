@@ -9,3 +9,6 @@ insecure
 mrt:bootswatch-yeti
 mrt:jquery-csv
 arunoda:npm
+standard-minifier-css
+standard-minifier-js
+everhusk:mapbox

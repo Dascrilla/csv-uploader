@@ -1,0 +1,7 @@
+/* CSS declarations go here */
+.image-frame {
+    height: 600px;
+    background-size: cover;
+    background-position: center;
+    padding: 0px;
+}
