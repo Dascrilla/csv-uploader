@@ -48,8 +48,10 @@ var thisRegion = '94611'
 		this.autorun(function () {
 				if (Mapbox.loaded()) {
 						L.mapbox.accessToken = 'pk.eyJ1IjoiYWxleG5ldHNjaCIsImEiOiJsX0V6Wl9NIn0.i14NX5hv3bkVIi075nOM2g';
-						var geocoder = L.mapbox.geocoder('mapbox.places'),
-						map = L.mapbox.map('map', 'alexnetsch.j786e624');
+						var geocoder = L.mapbox.geocoder('mapbox.places')
+						map = L.mapbox.map('map', 'alexnetsch.j786e624').addControl(L.mapbox.geocoderControl('mapbox.places', {
+        autocomplete: true
+    }));;
 						geocoder.query(thisRegion, showMap);
 
 function showMap(err, data) {
@@ -63,14 +65,8 @@ function showMap(err, data) {
 			}
 		}
 
-	/*customerAddressList = function (){
-		Customers.find().forEach(function(obj){
-				console.log(obj.Street +", "+
-										obj.City +", "+
-										obj.State+", "+
-										obj.Zip)
-		})
-	}*/
+
+
 		// Initializes Markers binds popup
 			var addMarker;
 			addMarker = function(geocoder, map, placeName, popupContent) {
@@ -82,45 +78,19 @@ function showMap(err, data) {
 			});
 		};
 
-			/*var addPopup;
-			addPopover = function(geocoder, map, placeName) {
-			return geocoder.query(placeName, function(error, result) {
-					var popOver;
-					popOver = L.mapbox.featureLayer({
-		        type: 'FeatureCollection',
-		        features: [{
-		            type: 'Feature',
-				        properties: {
-		                'from': 'Duke Point',
-		                'to': 'Tsawwassen',
-		                'marker-color': '#548cba',
-		                'marker-size': 'large',
-		                'marker-symbol': 'ferry'
-		            },
-		            geometry: {
-		                type: 'Point',
-		                coordinates: result.latlng
-		            }
-		        }]
-		    })
-    return popOver.addTo(map);
-			});
-		};
-*/
-
 
 // Fetches DB as Array, Geocodes addresses and adds markers for each DB row in a for loop
 var customerCursor = Customers.find();
 var customers = customerCursor.fetch();
 	for (var i=0; i<customers.length; i++) {
-	 var thisAddress = customers[i].Street 
+	 var thisAddress = customers[i].Street +", "+
 										customers[i].City +", "+
 										customers[i].State+", "+
 										customers[i].Zip;
   
   var popupContent = customers[i].Name + '<br \/>' +
   									thisAddress + '<br \/>' +
-										'Employee Count: ' + customers[i].EE + '<br \/>' +
+										'EE Count: ' + customers[i].EE + '<br \/>' +
 										'Industry: ' + customers[i].Industry + '<br \/>' +
 										'Industry V2: ' + customers[i].IndustryV2;
 
@@ -131,4 +101,13 @@ var customers = customerCursor.fetch();
 }}
 )};
 
+
+	/*customerAddressList = function (){
+		Customers.find().forEach(function(obj){
+				console.log(obj.Street +", "+
+										obj.City +", "+
+										obj.State+", "+
+										obj.Zip)
+		})
+	}*/
 
