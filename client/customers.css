@@ -1,4 +1,6 @@
 /* CSS declarations go here */
+
+/* Sets size of the Map */
 .image-frame {
     height: 600px;
     background-size: cover;

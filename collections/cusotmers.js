@@ -2,9 +2,9 @@ Customers = new Meteor.Collection('customers');
 
 Meteor.methods({
     customersRemove: function(){
-	     alert('Cusomters Removed!')
-	     console.log("Customers Removed!")
-     return Customers.remove({});
+    	 Customers.remove({});
+	     console.log("Customers Removed!");
+     return alert('Cusomters Removed!');
     }
 
 });

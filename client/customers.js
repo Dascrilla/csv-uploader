@@ -41,9 +41,10 @@ Meteor.startup(function(){
 
 Template.main.rendered = function () {
 
-//Sets the default zip region
-var defaultRegion = '94102'
+// Sets the default zip region
+		var defaultRegion = '9410'
 
+// Init Mapbox and geocoder	
 		this.autorun(function () {
 				if (Mapbox.loaded()) {
 						L.mapbox.accessToken = 'pk.eyJ1IjoiYWxleG5ldHNjaCIsImEiOiJsX0V6Wl9NIn0.i14NX5hv3bkVIi075nOM2g';
@@ -63,7 +64,7 @@ function showMap(err, data) {
 				map.setView([data.latlng[0], data.latlng[1]], 14);
 			}
 		}
-		// Initializes Markers binds popup
+		// Init markers binds popups
 			var addMarker;
 			addMarker = function(geocoder, map, placeName, popupContent) {
 			return geocoder.query(placeName, function(error, result) {
@@ -73,7 +74,7 @@ function showMap(err, data) {
 				return marker.bindPopup(popupContent).addTo(map);
 			});
 		};
-// Fetches DB as Array, Geocodes addresses and adds markers for each DB row in a for loop
+// Fetches DB as Array, callsback geocoding function w/ addresses and iterates through db adding markers/popups for each row
 var customerCursor = Customers.find();
 var customers = customerCursor.fetch();
 	for (var i=0; i<customers.length; i++) {
@@ -87,7 +88,7 @@ var customers = customerCursor.fetch();
 										'EE Count: ' + customers[i].EE + '<br \/>' +
 										'Industry: ' + customers[i].Industry + '<br \/>' +
 										'Industry V2: ' + customers[i].IndustryV2 + '<br \/>' +
-										'SFDC Link: https://na23.salesforce.com/' + customers.[i].SFDC 
+										'SFDC Link: https://na23.salesforce.com/' + customers[i].SFDC
 
 	addMarker(geocoder, map, thisAddress, popupContent);
 
@@ -103,4 +104,3 @@ var customers = customerCursor.fetch();
 										obj.Zip)
 		})
 	}*/
-
